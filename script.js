@@ -406,7 +406,7 @@ function drawMaze() {
 function drawActor(ctx, col, row, color, emoji, cs) {
   const x = col * cs + cs / 2;
   const y = row * cs + cs / 2;
-  const r = cs * 0.38;
+  const r = Math.max(2, cs * 0.38);
 
   // Circle background
   ctx.beginPath();
