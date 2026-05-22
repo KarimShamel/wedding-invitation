@@ -9,9 +9,9 @@
    CONFIGURATION  ← Edit these to customise the wedding
    ============================================================ */
 const CONFIG = {
-  weddingDate : new Date('2025-06-21T17:00:00'), // Wedding datetime
-  groomName   : 'James',
-  brideName   : 'Sarah',
+  weddingDate : new Date('2026-06-21T17:00:00'), // Wedding datetime
+  groomName   : 'Ahmed',
+  brideName   : 'Sara',
   particleCount : 25,
   heartInterval : 2800,   // ms between new floating hearts
 };
@@ -228,7 +228,7 @@ function transitionToMain() {
   dom.mainContent.removeAttribute('aria-hidden');
 
   // Scroll to top smoothly
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  window.scrollTo({ top: 0, behavior: 'auto' });
 
   // Trigger initial reveal animations after a short delay
   setTimeout(triggerHeroReveal, 200);
