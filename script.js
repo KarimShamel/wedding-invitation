@@ -340,12 +340,25 @@ let mazeCtx   = null;
 let cellSize  = CELL;
 
 function resizeMazeCanvas() {
-  const wrap    = dom.mazeCanvas.parentElement;
-  const maxW    = Math.min(wrap.clientWidth - 24, 480);
-  cellSize      = Math.floor(maxW / COLS);
-  const w       = cellSize * COLS;
-  const h       = cellSize * ROWS;
-  dom.mazeCanvas.width  = w;
+  const wrap = dom.mazeCanvas.parentElement;
+
+  // Safe width fallback
+  let availableWidth = wrap.clientWidth;
+
+  // Prevent invalid sizes
+  if (!availableWidth || availableWidth < 100) {
+    availableWidth = 320;
+  }
+
+  const maxW = Math.min(availableWidth - 24, 480);
+
+  // Ensure positive cell size
+  cellSize = Math.max(16, Math.floor(maxW / COLS));
+
+  const w = cellSize * COLS;
+  const h = cellSize * ROWS;
+
+  dom.mazeCanvas.width = w;
   dom.mazeCanvas.height = h;
 }
 
