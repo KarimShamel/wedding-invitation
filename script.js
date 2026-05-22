@@ -235,7 +235,19 @@ function transitionToMain() {
 }
 
 function initEnvelope() {
+  if (dom.envelope) {
   dom.envelope.addEventListener('click', openEnvelope);
+
+  dom.envelope.addEventListener('touchstart', openEnvelope, {
+    passive: true
+  });
+
+  dom.envelope.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      openEnvelope();
+    }
+  });
+}
   dom.envelope.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEnvelope(); }
   });
