@@ -1,6 +1,6 @@
 /* ============================================================
    WEDDING INVITATION — script.js
-   All interactions, animations, maze game, countdown, gallery
+   Fixed Version (No Loading Freeze + Safe Element Checks)
    ============================================================ */
 
 'use strict';
@@ -11,31 +11,10 @@
 const CONFIG = {
   weddingDate : new Date('2026-06-21T17:00:00'),
   groomName   : 'Ahmed',
-  brideName   : 'Jana',
+  brideName   : 'Sara',
   particleCount : 25,
   heartInterval : 2800,
 };
-
-/* ============================================================
-   MAZE DEFINITION
-   ============================================================ */
-const MAZE_MAP = [
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,0,1,1,1,0,1,1,1,0,1,1,1,0,1],
-  [1,0,1,0,0,0,0,0,1,0,0,0,1,0,1],
-  [1,0,1,0,1,1,1,0,1,1,1,0,1,0,1],
-  [1,0,0,0,1,0,0,0,0,0,1,0,0,0,1],
-  [1,1,1,0,1,0,1,1,1,0,1,0,1,1,1],
-  [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
-  [1,0,1,1,1,0,1,0,1,1,1,1,1,0,1],
-  [1,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
-  [1,1,1,0,1,1,1,0,1,0,1,1,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
-  [1,0,1,1,1,1,1,1,1,1,1,0,1,0,1],
-  [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-];
 
 /* ============================================================
    DOM REFERENCES
@@ -45,24 +24,22 @@ const dom = {
   particles      : document.getElementById('particles-container'),
   hearts         : document.getElementById('hearts-container'),
   confetti       : document.getElementById('confetti-container'),
+
   musicBtn       : document.getElementById('music-toggle'),
   musicIcon      : document.querySelector('#music-toggle .music-icon'),
   bgMusic        : document.getElementById('bg-music'),
+
   envSection     : document.getElementById('envelope-section'),
   envelope       : document.getElementById('envelope'),
   waxSeal        : document.getElementById('wax-seal'),
+
   mainContent    : document.getElementById('main-content'),
+
   days           : document.getElementById('count-days'),
   hours          : document.getElementById('count-hours'),
   minutes        : document.getElementById('count-minutes'),
   seconds        : document.getElementById('count-seconds'),
-  mazeCanvas     : document.getElementById('maze-canvas'),
-  gameWin        : document.getElementById('game-win'),
-  btnReplay      : document.getElementById('btn-replay'),
-  btnUp          : document.getElementById('btn-up'),
-  btnDown        : document.getElementById('btn-down'),
-  btnLeft        : document.getElementById('btn-left'),
-  btnRight       : document.getElementById('btn-right'),
+
   galleryItems   : document.querySelectorAll('.gallery-item'),
   lightbox       : document.getElementById('lightbox'),
   lbImg          : document.getElementById('lb-img'),
@@ -77,7 +54,9 @@ const dom = {
 let audioCtx = null;
 
 function getAudioCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
   return audioCtx;
 }
 
@@ -86,6 +65,7 @@ function playChime(freqs, type = 'sine', vol = 0.18) {
     const ctx = getAudioCtx();
 
     freqs.forEach((freq, i) => {
+
       const osc  = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -104,6 +84,7 @@ function playChime(freqs, type = 'sine', vol = 0.18) {
       osc.start(start);
       osc.stop(start + 0.95);
     });
+
   } catch (e) {}
 }
 
@@ -111,14 +92,13 @@ function soundEnvelopeOpen() {
   playChime([523, 659, 784, 1047], 'sine', 0.15);
 }
 
-function soundGameWin() {
-  playChime([523,659,784,1047,1319], 'triangle', 0.18);
-}
-
 /* ============================================================
    LOADING SCREEN
    ============================================================ */
 function hideLoadingScreen() {
+
+  if (!dom.loadingScreen) return;
+
   dom.loadingScreen.classList.add('fade-out');
 
   dom.loadingScreen.addEventListener('transitionend', () => {
@@ -130,13 +110,16 @@ function hideLoadingScreen() {
    PARTICLES
    ============================================================ */
 function createParticle() {
+
+  if (!dom.particles) return;
+
   const p = document.createElement('div');
 
   p.className = 'particle';
 
-  const size = Math.random() * 6 + 3;
-  const left = Math.random() * 100;
-  const dur  = Math.random() * 18 + 12;
+  const size  = Math.random() * 6 + 3;
+  const left  = Math.random() * 100;
+  const dur   = Math.random() * 18 + 12;
   const delay = Math.random() * 20;
 
   p.style.cssText = `
@@ -152,6 +135,9 @@ function createParticle() {
 }
 
 function initParticles() {
+
+  if (!dom.particles) return;
+
   for (let i = 0; i < CONFIG.particleCount; i++) {
     createParticle();
   }
@@ -161,6 +147,9 @@ function initParticles() {
    FLOATING HEARTS
    ============================================================ */
 function spawnHeart() {
+
+  if (!dom.hearts) return;
+
   const h = document.createElement('div');
 
   h.className = 'fheart';
@@ -180,11 +169,17 @@ function spawnHeart() {
 
   dom.hearts.appendChild(h);
 
-  setTimeout(() => h.remove(), (dur + delay) * 1000);
+  setTimeout(() => {
+    h.remove();
+  }, (dur + delay) * 1000);
 }
 
 function initHearts() {
+
+  if (!dom.hearts) return;
+
   spawnHeart();
+
   setInterval(spawnHeart, CONFIG.heartInterval);
 }
 
@@ -194,16 +189,21 @@ function initHearts() {
 let envelopeOpened = false;
 
 function openEnvelope() {
+
   if (envelopeOpened) return;
 
   envelopeOpened = true;
 
-  dom.waxSeal.classList.add('pop');
+  if (dom.waxSeal) {
+    dom.waxSeal.classList.add('pop');
+  }
 
   soundEnvelopeOpen();
 
   setTimeout(() => {
-    dom.envelope.classList.add('opened', 'opening');
+    if (dom.envelope) {
+      dom.envelope.classList.add('opened', 'opening');
+    }
   }, 200);
 
   setTimeout(() => {
@@ -212,14 +212,17 @@ function openEnvelope() {
 }
 
 function showEnterButton() {
+
+  if (!dom.envelope) return;
+
   const letterInner = dom.envelope.querySelector('.letter-inner');
+
+  if (!letterInner) return;
 
   const btn = document.createElement('button');
 
   btn.className = 'env-enter-btn';
   btn.textContent = 'Enter ✦';
-
-  btn.setAttribute('aria-label', 'Enter the invitation');
 
   letterInner.appendChild(btn);
 
@@ -234,31 +237,42 @@ function showEnterButton() {
 }
 
 function transitionToMain() {
-  dom.envSection.classList.add('hide');
 
-  dom.mainContent.classList.remove('hidden');
-  dom.mainContent.removeAttribute('aria-hidden');
+  if (dom.envSection) {
+    dom.envSection.classList.add('hide');
+  }
 
-  window.scrollTo({ top: 0, behavior: 'auto' });
+  if (dom.mainContent) {
+    dom.mainContent.classList.remove('hidden');
+    dom.mainContent.removeAttribute('aria-hidden');
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'auto'
+  });
 
   setTimeout(triggerHeroReveal, 200);
 }
 
 function initEnvelope() {
-  if (dom.envelope) {
-    dom.envelope.addEventListener('click', openEnvelope);
 
-    dom.envelope.addEventListener('touchstart', openEnvelope, {
-      passive: true
-    });
+  if (!dom.envelope) return;
 
-    dom.envelope.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openEnvelope();
-      }
-    });
-  }
+  dom.envelope.addEventListener('click', openEnvelope);
+
+  dom.envelope.addEventListener('touchstart', openEnvelope, {
+    passive: true
+  });
+
+  dom.envelope.addEventListener('keydown', (e) => {
+
+    if (e.key === 'Enter' || e.key === ' ') {
+
+      e.preventDefault();
+      openEnvelope();
+    }
+  });
 }
 
 /* ============================================================
@@ -267,29 +281,39 @@ function initEnvelope() {
 let revealObserver = null;
 
 function triggerHeroReveal() {
-  const heroReveals = document.querySelectorAll('#hero-section .reveal-up');
+
+  const heroReveals =
+    document.querySelectorAll('#hero-section .reveal-up');
 
   heroReveals.forEach((el, i) => {
+
     setTimeout(() => {
       el.classList.add('visible');
     }, i * 120);
+
   });
 }
 
 function initScrollReveal() {
+
   revealObserver = new IntersectionObserver((entries) => {
+
     entries.forEach(entry => {
+
       if (entry.isIntersecting) {
+
         entry.target.classList.add('visible');
         revealObserver.unobserve(entry.target);
       }
     });
+
   }, {
     threshold: 0.15,
     rootMargin: '0px 0px -40px 0px'
   });
 
-  document.querySelectorAll('.reveal-up:not(#hero-section .reveal-up)')
+  document
+    .querySelectorAll('.reveal-up:not(#hero-section .reveal-up)')
     .forEach(el => revealObserver.observe(el));
 }
 
@@ -301,6 +325,9 @@ function pad(n) {
 }
 
 function flipNumber(el, newVal) {
+
+  if (!el) return;
+
   const current = el.textContent;
 
   if (current === newVal) return;
@@ -319,14 +346,24 @@ function flipNumber(el, newVal) {
 }
 
 function updateCountdown() {
+
+  if (
+    !dom.days ||
+    !dom.hours ||
+    !dom.minutes ||
+    !dom.seconds
+  ) return;
+
   const now  = Date.now();
   const diff = CONFIG.weddingDate - now;
 
   if (diff <= 0) {
+
     dom.days.textContent    = '00';
     dom.hours.textContent   = '00';
     dom.minutes.textContent = '00';
     dom.seconds.textContent = '00';
+
     return;
   }
 
@@ -342,10 +379,237 @@ function updateCountdown() {
 }
 
 function initCountdown() {
+
   updateCountdown();
+
   setInterval(updateCountdown, 1000);
 }
 
 /* ============================================================
-   MAZE GAME
+   GALLERY + LIGHTBOX
    ============================================================ */
+const GALLERY_SRCS = [
+  'img/gallery1.jpg',
+  'img/gallery2.jpg',
+  'img/gallery3.jpg',
+  'img/gallery4.jpg',
+  'img/gallery5.jpg',
+  'img/gallery6.jpg',
+];
+
+let lbIndex = 0;
+
+function openLightbox(index) {
+
+  if (!dom.lbImg || !dom.lightbox) return;
+
+  lbIndex = index;
+
+  dom.lbImg.src = GALLERY_SRCS[lbIndex];
+  dom.lbImg.alt = `Gallery photo ${lbIndex + 1}`;
+
+  dom.lightbox.classList.remove('hidden');
+
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+
+  if (!dom.lightbox || !dom.lbImg) return;
+
+  dom.lightbox.classList.add('hidden');
+
+  document.body.style.overflow = '';
+
+  dom.lbImg.src = '';
+}
+
+function lightboxStep(dir) {
+
+  if (!dom.lbImg) return;
+
+  lbIndex =
+    (lbIndex + dir + GALLERY_SRCS.length) %
+    GALLERY_SRCS.length;
+
+  dom.lbImg.src = '';
+
+  setTimeout(() => {
+
+    dom.lbImg.src = GALLERY_SRCS[lbIndex];
+    dom.lbImg.alt = `Gallery photo ${lbIndex + 1}`;
+
+  }, 60);
+}
+
+function initGallery() {
+
+  if (!dom.galleryItems.length) return;
+
+  dom.galleryItems.forEach(item => {
+
+    item.addEventListener('click', () => {
+      openLightbox(Number(item.dataset.index));
+    });
+
+  });
+
+  if (dom.lbClose) {
+    dom.lbClose.addEventListener('click', closeLightbox);
+  }
+
+  if (dom.lbPrev) {
+    dom.lbPrev.addEventListener('click', () => lightboxStep(-1));
+  }
+
+  if (dom.lbNext) {
+    dom.lbNext.addEventListener('click', () => lightboxStep(1));
+  }
+
+  if (dom.lightbox) {
+
+    dom.lightbox.addEventListener('click', (e) => {
+
+      if (e.target === dom.lightbox) {
+        closeLightbox();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+
+    if (
+      e.key === 'Escape' &&
+      dom.lightbox &&
+      !dom.lightbox.classList.contains('hidden')
+    ) {
+      closeLightbox();
+    }
+  });
+}
+
+/* ============================================================
+   MUSIC
+   ============================================================ */
+let musicPlaying = false;
+
+function initMusic() {
+
+  if (!dom.musicBtn || !dom.bgMusic) return;
+
+  dom.musicBtn.addEventListener('click', () => {
+
+    if (!musicPlaying) {
+
+      dom.bgMusic.play().then(() => {
+
+        musicPlaying = true;
+
+        if (dom.musicIcon) {
+          dom.musicIcon.classList.remove('paused');
+        }
+
+        const lbl =
+          dom.musicBtn.querySelector('.music-label');
+
+        if (lbl) lbl.textContent = 'Pause';
+
+      }).catch(() => {
+
+        const lbl =
+          dom.musicBtn.querySelector('.music-label');
+
+        if (lbl) lbl.textContent = 'Unavailable';
+      });
+
+    } else {
+
+      dom.bgMusic.pause();
+
+      musicPlaying = false;
+
+      if (dom.musicIcon) {
+        dom.musicIcon.classList.add('paused');
+      }
+
+      const lbl =
+        dom.musicBtn.querySelector('.music-label');
+
+      if (lbl) lbl.textContent = 'Music';
+    }
+  });
+}
+
+/* ============================================================
+   PARALLAX
+   ============================================================ */
+function initParallax() {
+
+  const photoFrame =
+    document.querySelector('.photo-frame-wrap');
+
+  if (!photoFrame) return;
+
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+
+    if (!ticking) {
+
+      requestAnimationFrame(() => {
+
+        const rect = photoFrame.getBoundingClientRect();
+
+        const center =
+          rect.top +
+          rect.height / 2 -
+          window.innerHeight / 2;
+
+        const shift = center * 0.04;
+
+        photoFrame.style.transform =
+          `translateY(${shift}px)`;
+
+        ticking = false;
+      });
+
+      ticking = true;
+    }
+  });
+}
+
+/* ============================================================
+   MAIN INIT
+   ============================================================ */
+function init() {
+
+  try {
+
+    initParticles();
+    initHearts();
+
+    initEnvelope();
+
+    initMusic();
+
+    initCountdown();
+
+    initScrollReveal();
+
+    initGallery();
+
+    initParallax();
+
+  } catch (err) {
+
+    console.error('Initialization Error:', err);
+  }
+
+  // ALWAYS hide loading screen
+  setTimeout(hideLoadingScreen, 1400);
+}
+
+/* ============================================================
+   START
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', init);
