@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Wedding Invitation – Ahmed & Sara" />
-  <title>Sarah & James — Wedding Invitation</title>
+  <meta name="description" content="Wedding Invitation – Ahmed & Jana" />
+  <title>Ahmed & Jana — Wedding Invitation</title>
 
   <!-- Google Fonts: Great Vibes (cursive) · Playfair Display (display) · Cormorant Garamond (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +37,7 @@
     <span class="music-icon" aria-hidden="true">♪</span>
     <span class="music-label">Music</span>
   </button>
-  <!-- Hidden audio element — replace audio/romantic.mp3 with your file -->
+
   <audio id="bg-music" loop preload="none">
     <source src="audio/romantic.mp3" type="audio/mpeg" />
   </audio>
@@ -46,14 +46,11 @@
   <section id="envelope-section" aria-label="Invitation envelope">
     <div class="env-scene">
 
-      <!-- The envelope -->
       <div class="envelope" id="envelope" role="button" tabindex="0"
            aria-label="Click to open your invitation">
 
-        <!-- Back plate -->
         <div class="env-back"></div>
 
-        <!-- Letter (slides up on open) -->
         <div class="env-letter" aria-hidden="true">
           <div class="letter-inner">
             <p class="letter-ornament">✦ ✦ ✦</p>
@@ -63,26 +60,22 @@
               <span class="rule-heart">♥</span>
               <span class="rule-line"></span>
             </div>
-            <p class="letter-names">Sarah &amp; James</p>
+            <p class="letter-names">Ahmed &amp; Jana</p>
             <p class="letter-sub">to celebrate their union</p>
           </div>
         </div>
 
-        <!-- Bottom V-fold (decorative) -->
         <div class="env-bottom-fold"></div>
 
-        <!-- Top flap (opens on click) -->
         <div class="env-flap">
           <div class="env-flap-inner"></div>
         </div>
 
-        <!-- Wax seal -->
         <div class="wax-seal" id="wax-seal" aria-hidden="true">
           <span>♥</span>
         </div>
       </div>
 
-      <!-- Hint text -->
       <p class="env-hint" aria-hidden="true">
         <span class="hint-dots">· · ·</span> Click to open <span class="hint-dots">· · ·</span>
       </p>
@@ -97,7 +90,7 @@
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero-content">
         <p class="hero-badge reveal-up">✦ &nbsp; Wedding Invitation &nbsp; ✦</p>
-        <h1 class="hero-names reveal-up">Sarah &amp; James</h1>
+        <h1 class="hero-names reveal-up">Ahmed &amp; Jana</h1>
         <p class="hero-tagline reveal-up">Are Getting Married</p>
         <div class="hero-rule reveal-up">
           <span class="rule-line"></span>
@@ -134,6 +127,7 @@
       <div class="container">
         <p class="section-eyebrow light reveal-up">— The Details —</p>
         <h2 class="section-title light reveal-up">Ceremony Details</h2>
+
         <div class="details-grid">
 
           <article class="detail-card glass-card-dark reveal-up" aria-label="Date">
@@ -166,22 +160,29 @@
       <div class="container">
         <p class="section-eyebrow reveal-up">— Until Forever —</p>
         <h2 class="section-title reveal-up">Counting Down</h2>
+
         <div class="countdown-row reveal-up" role="timer" aria-live="polite" aria-label="Time remaining">
           <div class="cdown-card glass-card">
-            <span id="count-days"    class="cdown-num">00</span>
+            <span id="count-days" class="cdown-num">00</span>
             <span class="cdown-lbl">Days</span>
           </div>
+
           <span class="cdown-sep" aria-hidden="true">:</span>
+
           <div class="cdown-card glass-card">
-            <span id="count-hours"   class="cdown-num">00</span>
+            <span id="count-hours" class="cdown-num">00</span>
             <span class="cdown-lbl">Hours</span>
           </div>
+
           <span class="cdown-sep" aria-hidden="true">:</span>
+
           <div class="cdown-card glass-card">
             <span id="count-minutes" class="cdown-num">00</span>
             <span class="cdown-lbl">Minutes</span>
           </div>
+
           <span class="cdown-sep" aria-hidden="true">:</span>
+
           <div class="cdown-card glass-card">
             <span id="count-seconds" class="cdown-num">00</span>
             <span class="cdown-lbl">Seconds</span>
@@ -199,15 +200,13 @@
         <div class="photo-frame-wrap reveal-up">
           <div class="photo-frame">
             <div class="frame-glow" aria-hidden="true"></div>
-            <!--
-              REPLACE: add your photo at img/couple.jpg
-              The placeholder gradient shows until the image is provided.
-            -->
+
             <div class="photo-placeholder" aria-label="Couple photo placeholder">
               <span aria-hidden="true">💑</span>
               <p>Replace with <code>img/couple.jpg</code></p>
             </div>
-            <img src="img/couple.jpg" alt="Sarah and James"
+
+            <img src="img/couple.jpg" alt="Ahmed and Jana"
                  class="couple-photo" loading="lazy"
                  onerror="this.style.display='none'" />
           </div>
@@ -215,130 +214,13 @@
       </div>
     </section>
 
-    <!-- ========== MAZE GAME ========== -->
-    <section id="game-section" class="section" aria-label="Interactive maze game">
-      <div class="container">
-        <p class="section-eyebrow reveal-up">— A Little Game —</p>
-        <h2 class="section-title reveal-up">Find His Love</h2>
-        <p class="game-desc reveal-up">Help Ahmed navigate through the maze to reach Sarah ❤️</p>
-
-        <div class="game-wrap reveal-up">
-          <!-- Canvas -->
-          <div class="game-canvas-wrap glass-card">
-            <canvas id="maze-canvas" role="img"
-                    aria-label="Maze game — use arrow keys or on-screen buttons to navigate"></canvas>
-            <!-- Win overlay -->
-            <div id="game-win" class="game-win hidden" aria-live="assertive">
-              <div class="game-win-inner">
-                <p class="win-title">He Found His Love&nbsp;❤️</p>
-                <button id="btn-replay" class="btn-replay">Play Again</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- On-screen controls -->
-          <div class="game-controls" role="group" aria-label="Game controls">
-            <div class="ctrl-grid">
-              <button class="ctrl-btn" id="btn-up"    aria-label="Move up">▲</button>
-              <div class="ctrl-mid-row">
-                <button class="ctrl-btn" id="btn-left"  aria-label="Move left">◀</button>
-                <div class="ctrl-heart" aria-hidden="true">♥</div>
-                <button class="ctrl-btn" id="btn-right" aria-label="Move right">▶</button>
-              </div>
-              <button class="ctrl-btn" id="btn-down"  aria-label="Move down">▼</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== GALLERY ========== -->
-    <section id="gallery-section" class="section section-dark" aria-label="Photo gallery">
-      <div class="container">
-        <p class="section-eyebrow light reveal-up">— Memories —</p>
-        <h2 class="section-title light reveal-up">Our Story in Photos</h2>
-
-        <!--
-          REPLACE: put your photos at img/gallery1.jpg … img/gallery6.jpg
-          The gradient backgrounds are placeholders.
-        -->
-        <div class="gallery-grid reveal-up" role="list">
-
-          <button class="gallery-item" role="listitem" data-index="0"
-                  style="--g:linear-gradient(135deg,#F4B8C1,#C9A84C)"
-                  aria-label="Gallery photo 1">
-            <img src="img/gallery1.jpg" alt="Memory 1" loading="lazy" onerror="this.style.display='none'" />
-            <div class="gallery-overlay" aria-hidden="true">
-              <span class="gallery-zoom">⊕</span>
-            </div>
-          </button>
-
-          <button class="gallery-item" role="listitem" data-index="1"
-                  style="--g:linear-gradient(135deg,#E8C97A,#F4B8C1)"
-                  aria-label="Gallery photo 2">
-            <img src="img/gallery2.jpg" alt="Memory 2" loading="lazy" onerror="this.style.display='none'" />
-            <div class="gallery-overlay" aria-hidden="true">
-              <span class="gallery-zoom">⊕</span>
-            </div>
-          </button>
-
-          <button class="gallery-item" role="listitem" data-index="2"
-                  style="--g:linear-gradient(135deg,#C9A84C,#FDF6EC)"
-                  aria-label="Gallery photo 3">
-            <img src="img/gallery3.jpg" alt="Memory 3" loading="lazy" onerror="this.style.display='none'" />
-            <div class="gallery-overlay" aria-hidden="true">
-              <span class="gallery-zoom">⊕</span>
-            </div>
-          </button>
-
-          <button class="gallery-item" role="listitem" data-index="3"
-                  style="--g:linear-gradient(135deg,#F4B8C1,#E8C97A)"
-                  aria-label="Gallery photo 4">
-            <img src="img/gallery4.jpg" alt="Memory 4" loading="lazy" onerror="this.style.display='none'" />
-            <div class="gallery-overlay" aria-hidden="true">
-              <span class="gallery-zoom">⊕</span>
-            </div>
-          </button>
-
-          <button class="gallery-item" role="listitem" data-index="4"
-                  style="--g:linear-gradient(135deg,#FDF6EC,#C9A84C)"
-                  aria-label="Gallery photo 5">
-            <img src="img/gallery5.jpg" alt="Memory 5" loading="lazy" onerror="this.style.display='none'" />
-            <div class="gallery-overlay" aria-hidden="true">
-              <span class="gallery-zoom">⊕</span>
-            </div>
-          </button>
-
-          <button class="gallery-item" role="listitem" data-index="5"
-                  style="--g:linear-gradient(135deg,#E8C97A,#F4B8C1)"
-                  aria-label="Gallery photo 6">
-            <img src="img/gallery6.jpg" alt="Memory 6" loading="lazy" onerror="this.style.display='none'" />
-            <div class="gallery-overlay" aria-hidden="true">
-              <span class="gallery-zoom">⊕</span>
-            </div>
-          </button>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Lightbox -->
-    <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true"
-         aria-label="Photo lightbox">
-      <button class="lb-close" id="lb-close" aria-label="Close lightbox">✕</button>
-      <button class="lb-prev"  id="lb-prev"  aria-label="Previous photo">‹</button>
-      <button class="lb-next"  id="lb-next"  aria-label="Next photo">›</button>
-      <div class="lb-inner">
-        <img id="lb-img" src="" alt="Gallery photo" />
-      </div>
-    </div>
-
     <!-- ========== FOREVER ========== -->
     <section id="forever-section" class="section" aria-label="Forever message">
       <div class="forever-bg" aria-hidden="true"></div>
+
       <div class="container forever-content">
         <p class="forever-word reveal-up">Forever</p>
-        <p class="forever-names reveal-up">Ahmed &amp; sara</p>
+        <p class="forever-names reveal-up">Ahmed &amp; Jana</p>
         <p class="forever-hearts reveal-up" aria-hidden="true">❤ &nbsp; ❤ &nbsp; ❤</p>
       </div>
     </section>
@@ -346,21 +228,25 @@
     <!-- ========== FOOTER ========== -->
     <footer id="footer">
       <div class="footer-top" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+
       <p class="footer-tagline">With love &amp; celebration</p>
+
       <div class="footer-rule" aria-hidden="true">
         <span class="rule-line"></span>
         <span class="rule-heart">♥</span>
         <span class="rule-line"></span>
       </div>
+
       <div class="footer-credit">
         <p class="footer-by">Designed by</p>
         <p class="footer-company">Wajha for Digital Solutions</p>
         <a href="tel:01508222682" class="footer-phone">📞 01508222682</a>
       </div>
+
       <p class="footer-copy">© 2025 &nbsp; All Rights Reserved</p>
     </footer>
 
-  </main><!-- /#main-content -->
+  </main>
 
   <script src="script.js"></script>
 </body>
