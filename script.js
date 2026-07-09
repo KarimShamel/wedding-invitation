@@ -211,12 +211,6 @@ function openEnvelope() {
   }, 2400);
 }
 
-setTimeout(() => {
-    document.getElementById("envelope-section").style.display = "none";
-    document.getElementById("main-content").classList.remove("hidden");
-    document.getElementById("main-content").setAttribute("aria-hidden", "false");
-}, 1000); // match your animation duration
-
 function showEnterButton() {
 
   if (!dom.envelope) return;
@@ -236,6 +230,10 @@ function showEnterButton() {
     btn.style.opacity = '1';
   });
 
+btn.style.position = "relative";
+btn.style.zIndex = "9999";
+btn.style.pointerEvents = "auto";
+   
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     transitionToMain();
