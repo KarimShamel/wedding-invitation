@@ -9,9 +9,9 @@
    CONFIGURATION
    ============================================================ */
 const CONFIG = {
-  weddingDate : new Date('2026-06-21T17:00:00'),
-  groomName   : 'Ahmed',
-  brideName   : 'Sara',
+  weddingDate : new Date('2026-07-31T19:00:00'),
+  groomName   : 'Mohamed',
+  brideName   : 'Menna',
   particleCount : 25,
   heartInterval : 2800,
 };
